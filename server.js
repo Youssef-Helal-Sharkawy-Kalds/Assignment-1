@@ -37,6 +37,25 @@ app.get("/books/:id", (req, res) => {
     res.json(book);
 });
 
+// update a book by id
+app.put("/books/:id", (req, res) => {
+    const book = books.find((b) => b.id === parseInt(req.params.id));
+    if (!book) return res.status(404).send("Book not found");
+
+    book.title = req.body.title;
+    book.author = req.body.author;
+    res.json(book);
+});
+
+// delete a book by id
+app.delete("/books/:id", (req, res) => {
+    const bookIndex = books.findIndex((b) => b.id === parseInt(req.params.id));
+    if (bookIndex === -1) return res.status(404).send("Book not found");
+
+    const deletedBook = books.splice(bookIndex, 1);
+    res.json(deletedBook);
+});
+
 app.listen(port, () => {
     console.log(`The app listening on http://localhost:${port}`);
 });
