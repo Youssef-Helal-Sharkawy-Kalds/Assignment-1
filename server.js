@@ -30,6 +30,13 @@ app.post("/books", (req, res) => {
     res.status(201).json(newBook);
 });
 
+// get a single book by id
+app.get("/books/:id", (req, res) => {
+    const book = books.find((b) => b.id === parseInt(req.params.id));
+    if (!book) return res.status(404).send("Book not found");
+    res.json(book);
+});
+
 app.listen(port, () => {
     console.log(`The app listening on http://localhost:${port}`);
 });
